@@ -1,0 +1,6 @@
+spring:
+  application.name: spring-ai-demo
+  ai:
+    openai:
+      api-key: ${SPRING_AI_DEMO_API_KEY}
+#      model: gpt-3.5-turbo
