@@ -22,9 +22,13 @@ repositories {
 extra["springAiVersion"] = "1.1.1"
 
 dependencies {
+    implementation(platform("org.springframework.ai:spring-ai-bom:1.1.2"))
     implementation("org.springframework.boot:spring-boot-starter-web")
 //    implementation("org.springframework.ai:spring-ai-starter-model-ollama")
     implementation("org.springframework.ai:spring-ai-starter-model-openai")
+
+    implementation("org.springframework.ai:spring-ai-starter-vector-store-qdrant")
+    implementation("org.springframework.ai:spring-ai-advisors-vector-store")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

@@ -3,4 +3,23 @@ spring:
   ai:
     openai:
       api-key: ${SPRING_AI_DEMO_API_KEY}
-#      model: gpt-3.5-turbo
+      chat:
+        options:
+          model: gpt-4o-mini
+      embedding:
+        options:
+          model: text-embedding-3-small
+      audio:
+        speech:
+          options:
+            model: gpt-4o-mini-tts
+            voice: onyx
+            response-format: wav
+            speed: 0.95
+    vectorstore:
+      qdrant:
+        host: localhost
+        port: 6334          # gRPC port
+        collection-name: vector_store
+        initialize-schema: true
+        use-tls: false

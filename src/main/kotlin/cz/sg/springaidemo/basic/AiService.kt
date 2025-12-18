@@ -1,18 +1,16 @@
-package cz.sg.springaidemo
+package cz.sg.springaidemo.basic
 
 import mu.KotlinLogging
 import org.springframework.ai.chat.client.ChatClient
+import org.springframework.ai.chat.messages.AssistantMessage
 import org.springframework.ai.chat.messages.SystemMessage
 import org.springframework.ai.chat.messages.UserMessage
 import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
 
 @Service
-class SimpleAiService(chatClientBuilder: ChatClient.Builder) {
+class AiService(chatClientBuilder: ChatClient.Builder) {
 
     private val chatClient = chatClientBuilder.build()
 
@@ -26,25 +24,13 @@ class SimpleAiService(chatClientBuilder: ChatClient.Builder) {
     fun getResponseWithPrompt(systemText: String, userText: String): String? {
         val systemPrompt = SystemMessage(systemText)
         val userPrompt = UserMessage(userText)
+//        val toolResponseMessage = ToolResponseMessage()
+        val assistantMessage = AssistantMessage("")
 
         val prompt = Prompt(listOf(systemPrompt, userPrompt))
         val response = chatClient.prompt(prompt).call().content()
         return response
     }
-}
-
-@RestController
-class DummyController(private val simpleAiService: SimpleAiService) {
-
-    @GetMapping("/ask-hello")
-    fun asText() = simpleAiService.getResponseAsText("Say hello world for me")
-
-    @GetMapping("/ask-chat-response")
-    fun asChatResponse(@RequestParam text: String) = simpleAiService.getResponseAsChatResponse(text)
-
-    @GetMapping("/ask-with-prompt")
-    fun withPrompt(@RequestParam systemText: String, @RequestParam userText: String) =
-        simpleAiService.getResponseWithPrompt(systemText, userText)
 }
 
 private val logger = KotlinLogging.logger {}
